@@ -1,0 +1,18 @@
+<script>
+// Literal object
+var hong = {
+	name: '홍길동',
+	age: 24,
+	run: function() {
+		console.log(this.name + '이(가) 뜁니다.');
+	}
+}
+
+
+var hong2 = hong;
+
+hong2.name = '홍길순';
+console.log( hong.name );
+console.log( hong.age );
+hong.run();
+</script>
