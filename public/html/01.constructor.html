@@ -9,10 +9,56 @@ var hong = {
 }
 
 
-var hong2 = hong;
+var hong2 = JSON.parse(JSON.stringify(hong)); // deep copy
 
 hong2.name = '홍길순';
 console.log( hong.name );
+console.log( hong2.name );
 console.log( hong.age );
 hong.run();
+
+
+// Constructor Object: return Literal Object 
+function Man() {
+
+}
+
+var hongkd = new Man();
+var hongks = new Man();
+
+hongkd.name = '홍길동';
+hongks.name = '홍길순';
+
+console.log(hongkd, hongks);
+
+function Car(_name, _type, _color) {
+	this.name = _name;
+	this.type = _type;
+	this.color = _color;
+}
+Car.prototype.drive = function() {
+	console.log(this.name + '이(가) 달립니다.');
+}
+
+var arr = new Array();
+var myCar = new Car('bongbong', 'sonata', 'white'); // new Literal (101)
+var myCar2 = new Car('bangbang', 'santafe', 'black'); // new Literal (102)
+
+console.log(arr, myCar, myCar2);
+myCar.drive();
+myCar2.drive();
+
+class Car2 {
+	constructor(_name, _type, _color) {
+		this.name = _name;
+		this.type = _type;
+		this.color = _color;
+	}
+	drive() {
+		console.log(this.name + '이(가) 달립니다.');
+	}
+}
+
+var myCar3 = new Car2('boongboong', 'morning', 'red');
+myCar3.drive();
 </script>
