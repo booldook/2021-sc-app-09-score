@@ -9,9 +9,9 @@ true 판정: false판정 외 모든것
 /************** global init ***************/
 console.log(firebase);
 var auth = firebase.auth();
-var db = firebase.database();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
-// console.log(auth, db, googleAuth);
+var db = firebase.database();
+
 
 
 /************** function init ***************/
@@ -37,6 +37,7 @@ function onAuthChanged(user) { // auth상태가 변하면 알려줘
 
 function onLogin() {
 	auth.signInWithPopup(googleAuth);
+	// auth.signInWithRedirect(googleAuth);
 }
 
 function onLogout() {
