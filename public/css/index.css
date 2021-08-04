@@ -14,6 +14,7 @@ html, body {font-family: 'Nanum Gothic', sans-serif; font-size: 16px; height: 20
 .header-wrapper .navi-wrap {margin-left: auto; display: flex;}
 .header-wrapper .navi-wrap .navi {padding: 1em 1.25em; cursor: pointer;}
 .header-wrapper .navi-wrap .navi:hover {background-color: azure; color: #111;}
+.header-wrapper .bt-logout {display: none;}
 
 @media screen and (max-width: 1199px) {
 	
