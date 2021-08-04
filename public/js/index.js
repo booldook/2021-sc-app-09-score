@@ -10,8 +10,8 @@ true 판정: false판정 외 모든것
 console.log(firebase);
 var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
-var db = firebase.database();
 var user = null;
+var db = firebase.database();
 
 /************** function init ***************/
 
