@@ -1,0 +1,15 @@
+0.125 / 0.25 / 0.375 / 0.5 / 0.625 / 0.75 / 0.875 / 1.0 / 1.125
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Nanum+Gothic:wght@400;700&display=swap');
+/* font-family: 'Lato', sans-serif;
+font-family: 'Nanum Gothic', sans-serif; */
+
+/******************* Global *********************/
+html, body {font-family: 'Nanum Gothic', sans-serif; height: 2000px; font-size: 16px;}
+
+/******************* header-wrapper *********************/
+.header-wrapper {background-color: #333; color: #f8f8f8; font-family: 'Lato', sans-serif; display: flex; align-items: center;}
+.header-wrapper .navi-wrap {margin-left: auto; display: flex;}
+.header-wrapper .navi-wrap .navi {padding: 1em 1.25em;}
+
+
