@@ -6,7 +6,7 @@ font-family: 'Nanum Gothic', sans-serif; */
 
 /******************* Global *********************/
 html, body {font-family: 'Nanum Gothic', sans-serif; font-size: 16px; height: 2000px;}
-.wrapper {}
+.wrapper {max-width: 1000px; margin: 2em auto;}
 
 
 /******************* header-wrapper *********************/
@@ -20,8 +20,22 @@ html, body {font-family: 'Nanum Gothic', sans-serif; font-size: 16px; height: 20
 .header-wrapper .bt-login {background-color: darkslategrey;}
 .header-wrapper .bt-logout {display: none; background-color: #572128;}
 
-@media screen and (max-width: 1199px) {
-	
+/******************* title-wrapper *********************/
+.title-wrapper {padding: 2.5em; background-color: #dce5f1;}
+.title-wrapper h2.title {font-size: 2em; font-weight: bold; color: #3f454b; margin-bottom: .5em;}
+.title-wrapper h3.title {font-size: 1.25em; color: #6b7885;}
+
+/******************* test-wrapper *********************/
+.test-wrapper input {margin: 0 .5em .5em 0;}
+.test-wrapper input[name="username"] {max-width: 150px;}
+.test-wrapper input[name="comment"] {flex-grow: 1;}
+.test-wrapper button {margin-bottom: .5em;}
+
+
+
+/******************* 반응형 *********************/
+@media screen and (max-width: 1032px) {
+	.wrapper {margin-left: 16px; margin-right: 16px;}
 }
 
 @media screen and (max-width: 991px) {
@@ -33,5 +47,5 @@ html, body {font-family: 'Nanum Gothic', sans-serif; font-size: 16px; height: 20
 }
 
 @media screen and (max-width: 575px) {
-	
+	.header-wrapper span.name {display: none;}
 }

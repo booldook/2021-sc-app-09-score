@@ -11,15 +11,32 @@ console.log(firebase);
 var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
 var db = firebase.database();
-
-
+var user = null;
 
 /************** function init ***************/
 
 
 /************** event callback ***************/
-function onAuthChanged(user) { // auth상태가 변하면 알려줘
-	console.log(user);
+function onSubmit(f) {
+	if(!user) alert('로그인 후 사용해 주세요.');
+	else {
+		var data = {
+			username: f.username.value.trim(),
+			comment: f.comment.value.trim(),
+			createdAt: new Date().getTime(),
+			uid: user.uid,
+			email: user.email
+		}
+		if(data.username !== '' && data.comment !== '') {
+			db.ref('root/test').push(data);
+			f.reset();
+		}
+	}
+	return false;
+}
+
+function onAuthChanged(v) { // auth상태가 변하면 알려줘
+	user = v;
 	if(user) {
 		$('.bt-login').hide();
 		$('.bt-logout').show();

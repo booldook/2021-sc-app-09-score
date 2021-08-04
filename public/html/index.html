@@ -21,20 +21,39 @@
 		<h1 class="logo-wrap">
 			<div class="photo-logo"><img src="" alt="로고" class="w100"></div>
 			<i class="icon-logo fa fa-user-circle"></i> 
-			Booldook-Score
+			<span class="name">Booldook-Score</span>
 		</h1>
 		<ul class="navi-wrap">
-			<li class="navi"><i class="fa fa-edit"></i>	Score</li>
-			<li class="navi"><i class="fa fa-pencil-alt"></i> Board</li>
-			<li class="navi bt-login"><i class="fab fa-google"></i> Login</li>
-			<li class="navi bt-logout"><i class="fa fa-sign-out-alt"></i> Logout</li>
+			<li class="navi">
+				<i class="fa fa-edit"></i>
+				<span class="name">Score</span>
+			</li>
+			<li class="navi">
+				<i class="fa fa-pencil-alt"></i>
+				<span class="name">Board</span>
+			</li>
+			<li class="navi bt-login">
+				<i class="fab fa-google"></i>
+				<span class="name">Login</span>
+			</li>
+			<li class="navi bt-logout">
+				<i class="fa fa-sign-out-alt"></i>
+				<span class="name">Logout</span>
+			</li>
 		</ul>
 	</header>
 	<div class="title-wrapper wrapper">
 		<h2 class="title">성적관리시스템</h2>
 		<h3 class="title">firebase Auth 와 Realtime database 활용</h3>
 		<hr>
-		<button class="bt-input btn btn-primary">성적입력</button>
+		<button class="bt-input btn btn-success">성적입력</button>
+	</div>
+	<div class="test-wrapper wrapper">
+		<form action="#" class="form-inline" onsubmit="return onSubmit(this);">
+			<input class="form-control" type="text" name="username" placeholder="이름" required>
+			<input class="form-control" type="text" name="comment" placeholder="한마디" required>
+			<button type="submit" class="btn btn-primary">등록</button>
+		</form>
 	</div>
 	<script src="../js/util.js"></script>
 	<script src="../js/index.js"></script>
