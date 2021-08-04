@@ -15,6 +15,7 @@
 	<script src="/__/firebase/8.8.1/firebase-analytics.js"></script>
 	<script src="/__/firebase/init.js?useEmulator=true"></script>
 	<script src="../js/jquery.min.js"></script>
+	<script src="../js/moment.min.js"></script>
 </head>
 <body>
 	<header class="header-wrapper">
@@ -54,6 +55,19 @@
 			<input class="form-control" type="text" name="comment" placeholder="한마디" required>
 			<button type="submit" class="btn btn-primary">등록</button>
 		</form>
+		<table class="table table-hover table-striped my-3 text-center">
+			<thead class="thead-dark">
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>한줄코멘트</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+			<tbody class="tbody">
+				
+			</tbody>
+		</table>
 	</div>
 	<script src="../js/util.js"></script>
 	<script src="../js/index.js"></script>
