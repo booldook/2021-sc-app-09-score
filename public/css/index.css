@@ -10,7 +10,9 @@ html, body {font-family: 'Nanum Gothic', sans-serif; font-size: 16px; height: 20
 
 /******************* header-wrapper *********************/
 .header-wrapper {background-color: #333; color: #f8f8f8; font-family: 'Lato', sans-serif; display: flex; align-items: center;}
-.header-wrapper .logo {font-size: 1.25em; padding-left: .75em;}
+.header-wrapper .logo-wrap {font-size: 1.25em; padding-left: .75em; display: flex; align-items: center;}
+.header-wrapper .logo-wrap .photo-logo {width: 40px; height: 40px; border-radius: 20px; margin-right: .5em; overflow: hidden; display: none;}
+.header-wrapper .logo-wrap .icon-logo {margin-right: .5em;}
 .header-wrapper .navi-wrap {margin-left: auto; display: flex;}
 .header-wrapper .navi-wrap .navi {padding: 1em 1.25em; cursor: pointer;}
 .header-wrapper .navi-wrap .navi:hover {background-color: azure; color: #111;}
