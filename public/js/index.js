@@ -1,5 +1,5 @@
 /************** global init ***************/
-// console.log(firebase);
+console.log(firebase);
 var auth = firebase.auth();
 var db = firebase.database();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
