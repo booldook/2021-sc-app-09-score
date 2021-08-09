@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dimension</title>
+	<link rel="stylesheet" href="../css/all.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/moment.min.js"></script>
+	<script src="../js/util.js"></script>
+	<style>
+		.wrapper {max-width: 1500px; margin: auto; padding: 3em; border: 5px solid red;}
+		.wrapper .box {
+			background-color: cadetblue;
+			width: 25%; height: 200px; 
+			border: 10px solid blue; 
+			padding: 20px; 
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="box"></div>
+	</div>
+	
+	<script>
+		// https://www.w3schools.com/jquery/jquery_dimensions.asp
+		// jQuery에서 크기는 px로 나타낸다.
+		console.log( $('.box').width() 					);	// margin:x, border:x, padding:x 
+		console.log( $('.box').innerWidth() 		);	// margin:x, border:x, padding:o
+		console.log( $('.box').outerWidth()			);	// margin:x, border:o, padding:o (border-box일때 크기)
+		console.log( $('.box').outerWidth(true) ); 	// margin:o, border:o, padding:o
+
+		console.log( document.querySelector('.box').clientWidth ); // innerWidth()
+	</script>
+</body>
+</html>
