@@ -11,14 +11,37 @@
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/moment.min.js"></script>
 	<script src="../js/util.js"></script>
-	<style>
-
-	</style>
 </head>
 <body>
-	
+	<!-- 
+		bootstrap -1 : 0.25rem
+		bootstrap -2 : 0.5rem
+		bootstrap -3 : 1rem
+		bootstrap -4 : 2rem
+		bootstrap -5 : 3rem
+	 -->
+	<div class="container my-5 p-5 border border-danger fa-2x">
+		<div class="box border border-primary w-25 my-3 d-flex justify-content-center align-items-center" style="height: 100px;"></div>
+		<div class="box border border-primary w-25 my-3 d-flex justify-content-center align-items-center" style="height: 100px;"></div>
+		<div class="box border border-primary w-25 my-3 d-flex justify-content-center align-items-center" style="height: 100px;"></div>
+		<div class="box border border-primary w-25 my-3 d-flex justify-content-center align-items-center" style="height: 100px;"></div>
+		<div class="box border border-primary w-25 my-3 d-flex justify-content-center align-items-center" style="height: 100px;"></div>
+	</div>
 	<script>
-		// for, for~in, for~of, while, forEach
+		// for, for~in, for~of, while(절 state)
+		// 배열의 반복 메서드: forEach, map, filter, reduce ... 
+		// $().each()
+		/*for(var i=0; i<$('.box').length; i++) {
+			$('.box').eq(i).html('box'+i);
+		}*/
+		var arr = ['A', 'B', 'C'];
+		arr.forEach(function(v, i) {
+			console.log(i, v);
+		});
+		$('.box').each(function(i) {
+			console.log(i, $(this));
+			$(this).html('box'+i);
+		});
 	</script>
 </body>
 </html>

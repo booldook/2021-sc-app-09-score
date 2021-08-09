@@ -10,6 +10,21 @@
  * ! 8. 경주결과 확인 후 닫기 버튼을 누르면 초기화 상태로 돌아간다.
  */
 
+// database 저장
+/*
+{
+	uid: '',
+	ip: '',
+	dt: 1693474929398,
+	result: [
+		{ name: '홍길동', speed: 1513 },
+		{ name: '홍길순', speed: 1523 },
+		{ name: '홍길만', speed: 1578 },
+		{ name: '홍길룡', speed: 1629 }
+	]
+}
+*/
+
 console.log( document.initForm.cnt.value ); //js
 console.log( document.querySelector('form[name="initForm"] input[name="cnt"]').value ); //js
 console.log( $('form[name="initForm"] input[name="cnt"]').val() ); //jquery
@@ -53,7 +68,25 @@ function onInit() {
 function onStart() {
 	$('.bt-start').attr('disabled', true);
 	$('.bt-reset').attr('disabled', true);
-	$('.member-wp').stop().animate({'left': getTarget()}, 2000);
+
+	$('.member-wp').each(function(i) {
+		console.log('each 안!');
+		var speed = random(1500, 200);
+		console.log(i, speed);
+		$(this).stop().animate({'left': getTarget()}, 0, function() {
+			console.log('Animation 끝!');
+		});
+	});
+	console.log('each 끝!');
+
+	setTimeout(function() {
+		console.log('setTimeout');
+	}, 0);
+	console.log('애니메이션 후');
+
+
+	// 데이터베이스 저장 - 추후 구현
+	// modal창
 }
 
 function onReset() {
