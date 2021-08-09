@@ -68,23 +68,13 @@ function onInit() {
 function onStart() {
 	$('.bt-start').attr('disabled', true);
 	$('.bt-reset').attr('disabled', true);
-
 	$('.member-wp').each(function(i) {
-		console.log('each 안!');
 		var speed = random(1500, 200);
 		console.log(i, speed);
-		$(this).stop().animate({'left': getTarget()}, 0, function() {
+		$(this).stop().animate({'left': getTarget()}, speed, function() {
 			console.log('Animation 끝!');
 		});
 	});
-	console.log('each 끝!');
-
-	setTimeout(function() {
-		console.log('setTimeout');
-	}, 0);
-	console.log('애니메이션 후');
-
-
 	// 데이터베이스 저장 - 추후 구현
 	// modal창
 }
