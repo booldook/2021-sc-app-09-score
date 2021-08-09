@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>순위게임</title>
+	<link rel="stylesheet" href="../css/all.min.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/03.game.css">
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/moment.min.js"></script>
+	<script src="../js/util.js"></script>
+</head>
+<body>
+	<section class="wrapper">
+		<div class="alert alert-info main-title">달리기 게임</div>
+		<form action="#" name="initForm" class="form-inline">
+			<input type="number" name="cnt" id="cnt" value="4" class="form-control">
+			<button class="btn btn-success bt-init">준비</button>
+			<button class="btn btn-primary bt-start">시작</button>
+			<button class="btn btn-danger bt-reset">취소</button>
+		</form>
+		<div class="stage-wrap">
+			<div class="member-wp">
+				<div class="imgs">
+					<img src="../img/marathon.png" class="w100">
+				</div>
+				<input type="text" name="member" class="form-control">
+			</div>
+			<div class="member-wp">
+				<div class="imgs">
+					<img src="../img/marathon.png" class="w100">
+				</div>
+				<input type="text" name="member" class="form-control">
+			</div>
+		</div>
+	</section>
+	<script src="../js/03.game.js"></script>
+</body>
+</html>

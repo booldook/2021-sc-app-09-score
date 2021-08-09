@@ -1,0 +1,10 @@
+.wrapper {max-width: 1200px; margin: auto;}
+.main-title {font-size: 1.25em; font-weight: bold; padding: 1em; margin: .5em 0;}
+
+form[name="initForm"] {margin-bottom: 2em; border-bottom: 1px solid #dedede; padding-bottom: .5em;}
+form[name="initForm"] input[name="cnt"] {font-size: 1.5em; width: 90px; text-align: center;}
+form[name="initForm"] button {font-size: 1.25em; padding: .375em .75em; margin-left: .125em;}
+
+.stage-wrap {}
+.stage-wrap .member-wp {width: 120px; margin-bottom: 1em;}
+.stage-wrap .member-wp .imgs {}
