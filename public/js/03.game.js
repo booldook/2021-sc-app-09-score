@@ -70,12 +70,13 @@ function onStart() {
 	$('.bt-reset').attr('disabled', true);
 	$('.member-wp').each(function(i) {
 		var speed = random(1500, 200);
-		console.log(i, speed);
-		$(this).stop().animate({'left': getTarget()}, speed, function() {
-			console.log('Animation 끝!');
-		});
+		$(this).stop().animate({'left': getTarget()}, speed, animateCb);
 	});
-	// 데이터베이스 저장 - 추후 구현
+	// animation이 완료된 후
+	var cnt = $('.member-wp').length, num = 0;
+	function animateCb() {
+		if(++num === cnt) $('.modal-wrapper').show();
+	}
 }
 
 function onReset() {
@@ -86,11 +87,16 @@ function onReset() {
 	removeEl('.stage-wrap', true);
 }
 
+function onModalClose() {
+	$('.modal-wrapper').hide();
+}
+
 /*************** event init ***************/
 $('.wrapper .bt-init').click(onInit);
 $('.wrapper .bt-start').click(onStart);
 $('.wrapper .bt-reset').click(onReset);
 
+$('.modal-wrapper .bt-close').click(onModalClose);
 
 
 
