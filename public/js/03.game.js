@@ -87,9 +87,11 @@ function onReset() {
 }
 
 /*************** event init ***************/
-$('.bt-init').click(onInit);
-$('.bt-start').click(onStart);
-$('.bt-reset').click(onReset);
+$('.wrapper .bt-init').click(onInit);
+$('.wrapper .bt-start').click(onStart);
+$('.wrapper .bt-reset').click(onReset);
+
+
 
 
 /*************** start init ***************/
