@@ -76,7 +76,6 @@ function onStart() {
 		});
 	});
 	// 데이터베이스 저장 - 추후 구현
-	// modal창
 }
 
 function onReset() {

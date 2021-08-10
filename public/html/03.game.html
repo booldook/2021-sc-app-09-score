@@ -15,22 +15,44 @@
 </head>
 <body>
 	<section class="wrapper">
-		<div class="alert alert-info main-title">달리기 게임</div>
+		<h1 class="alert alert-info main-title">달리기 게임</h1>
 		<form action="//naver.com" name="initForm" class="form-inline">
-			<input type="number" name="cnt" id="cnt" value="4" min="2" max="8" step="1" class="form-control" autofocus>
+			<input type="number" name="cnt" id="cnt" value="3" min="2" max="8" step="1" class="form-control" autofocus>
 			<button type="button" class="btn btn-success bt-init">준비</button>
 			<button type="button" class="btn btn-primary bt-start">시작</button>
 			<button type="button" class="btn btn-danger bt-reset">취소</button>
 		</form>
-		<div class="stage-wrap">
-			<!-- <div class="member-wp">
-				<div class="imgs">
-					<img src="../img/marathon.png" class="w100">
-				</div>
-				<input type="text" name="member" class="form-control">
-			</div> -->
-		</div>
+		<div class="stage-wrap"></div>
 	</section>
+	<aside class="modal-wrapper">
+		<div class="modal-wrap">
+			<h2 class="title">달리기 결과</h2>
+			<p class="datetime">2021년 8월 10일 09시 43분 11초</p>
+			<table class="list-tb table text-center border-bottom">
+				<thead class="thead-dark">
+					<tr>
+						<th>순위</th>
+						<th>이름</th>
+						<th>기록</th>
+					</tr>
+				</thead>
+				<tbody class="list-tbody">
+					<!-- <tr>
+						<td class="score">1등</td>
+						<td class="name">홍길동</td>
+						<td class="time">01:22:34</td>
+					</tr> -->
+				</tbody>
+			</table>
+			<div class="bt-wp text-center">
+				<button class="btn btn-danger bt-close">닫기</button>
+				<button class="btn btn-success bt-save">저장하기</button>
+			</div>
+		</div>
+		<div class="modal-bt bt-close">
+			<i class="fa fa-times"></i>
+		</div>
+	</aside>
 	<script src="../js/03.game.js"></script>
 </body>
 </html>
