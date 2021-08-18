@@ -9,13 +9,46 @@
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/base.css">
 	<link rel="stylesheet" href="../css/08.file.css">
+	<script src="/__/firebase/8.8.1/firebase-app.js"></script>
+	<script src="/__/firebase/8.8.1/firebase-auth.js"></script>
+	<script src="/__/firebase/8.8.1/firebase-database.js"></script>
+	<script src="/__/firebase/8.8.1/firebase-storage.js"></script>
+	<script src="/__/firebase/8.8.1/firebase-analytics.js"></script>
+	<script src="/__/firebase/init.js?useEmulator=true"></script>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/moment.min.js"></script>
 	<script src="../js/lodash.min.js"></script>
 	<script src="../js/util.js"></script>
 </head>
 <body>
-	
+	<header class="header-wrapper">
+		<h1 class="logo-wrap">
+			<div class="photo-logo"><img src="" alt="로고" class="w100"></div>
+			<i class="icon-logo fa fa-user-circle"></i> 
+			<span class="name">Booldook-Score</span>
+		</h1>
+		<ul class="navi-wrap">
+			<li class="navi bt-login">
+				<i class="fab fa-google"></i>
+				<span class="name">Login</span>
+			</li>
+			<li class="navi bt-logout">
+				<i class="fa fa-sign-out-alt"></i>
+				<span class="name">Logout</span>
+			</li>
+		</ul>
+	</header>
+	<div class="container my-5 p-4 border">
+		<form name="uploadForm">
+			<div class="d-flex">
+				<input type="file" name="upfile" class="form-control-file flex-grow-1">
+				<button class="btn btn-primary flex-shrink-0">업로드</button>
+			</div>
+		</form>
+		<div class="text-center p-5">
+			<img src="//via.placeholder.com/300" alt="" class="mw100 main-img">
+		</div>
+	</div>
 	<script src="../js/08.file.js"></script>
 </body>
 </html>
