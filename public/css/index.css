@@ -2,6 +2,7 @@
 .wrapper {max-width: 1167px; margin: 1.5em auto; overflow: hidden;}
 .title-wrap {margin-bottom: .5em; border-left: 3px solid #9be67e; padding-left: .5em;}
 .title-wrap h2.title {font-size: 1.25em;}
+.material-icons {font-size: 1em; line-height: 1; transform: translateY(2px);}
 
 /******************* header-wrapper *********************/
 .header-wrapper {background-color: #333; color: #f8f8f8; font-family: 'Lato', sans-serif; display: flex; align-items: center;}
@@ -33,7 +34,7 @@
 .list-wrapper .list-tbl td {vertical-align: middle;}
 .list-wrapper .list-tbl td:nth-child(2) {text-align: left;}
 
-.list-wrapper .page-link {color: #333;}
+.list-wrapper .page-link {color: #333; cursor: pointer; user-select: none;}
 .list-wrapper .page-item.active .page-link {background-color: #348345; border-color: #348345;}
 
 
