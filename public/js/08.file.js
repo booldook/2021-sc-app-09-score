@@ -1,3 +1,7 @@
+// ['A', 'B', 'C'].indexOf('A'); // 0
+// 'video/jpeg'.indexOf('image'); // -1
+
+
 /*************** global init **************/
 var auth = firebase.auth();
 var database = firebase.database();
@@ -21,13 +25,17 @@ function genFile() {
 /************** event callback ************/
 function onAuthChanged(r) {
 	user = r;
-	if(user) {
+	if(user) { // 로그인
 		$('.bt-login').hide();
 		$('.bt-logout').show();
+		dbRoot.on('child_added', onAdded);
 	}
-	else {
+	else {	// 로그아웃
 		$('.bt-login').show();
 		$('.bt-logout').hide();
+		$('.list-wrap').empty();
+		$('.main-img').attr('src', '').hide();
+		$('.main-video').attr('src', '').hide();
 	}
 }
 
@@ -75,6 +83,7 @@ function onSubmit(e) {
 	}
 	
 	function onSuccess(r) {
+		$('.main-wrap').addClass('py-5');
 		if(file.type.split('/')[0] === 'image') {
 			$('.main-img').attr('src', r).show();
 			$('.main-video').hide();
@@ -86,7 +95,7 @@ function onSubmit(e) {
 		var saveData = {
 			oriname: file.name,
 			savename: savename.file,
-			path: 'imgs/'+savename.folder,
+			path: r,
 			type: file.type,
 			size: file.size,
 		}
@@ -99,7 +108,15 @@ function onSubmit(e) {
 	}
 }
 
-
+function onAdded(r) {
+	var html = '<li class="list">';
+	if(r.val().type.indexOf('image') > -1)
+		html += '<a href="'+r.val().path+'" target="_blank"><img src="'+r.val().path+'"></a>';
+	else
+		html += '<a href="'+r.val().path+'" target="_blank"><video src="'+r.val().path+'"></a>';
+	html += '</li>';
+	$(html).prependTo('.list-wrap');
+}
 
 /*************** event init ***************/
 auth.onAuthStateChanged(onAuthChanged);

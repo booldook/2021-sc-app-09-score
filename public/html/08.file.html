@@ -42,15 +42,18 @@
 	</header>
 	<div class="container my-5 p-4 border">
 		<form name="uploadForm">
-			<div class="d-flex">
+			<div class="d-flex align-items-center">
 				<input type="file" name="upfile" class="form-control-file flex-grow-1">
 				<button class="btn btn-primary flex-shrink-0">업로드</button>
 			</div>
 		</form>
-		<div class="text-center p-5">
-			<img src="//via.placeholder.com/300" class="mw100 main-img">
+		<div class="text-center main-wrap">
+			<img src="//via.placeholder.com/300" class="mw100 main-img" style="display: none;">
 			<video class="mw100 main-video" style="display: none;" controls autoplay muted loop></video>
 		</div>
+	</div>
+	<div class="container overflow-hidden">
+		<ul class="list-wrap d-flex align-items-start flex-wrap"></ul>
 	</div>
 	<script src="../js/08.file.js"></script>
 </body>
