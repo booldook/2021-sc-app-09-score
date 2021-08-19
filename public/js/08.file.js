@@ -5,11 +5,16 @@ var storage = firebase.storage();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
 var dbRoot = database.ref('root');
 var stRoot = storage.ref().child('imgs');
+var upfile;
 
 
 /************** user function *************/
 function genFile() {
-	return new Date().getTime() + '_' + random(1000, 1000);
+	var folder = moment().format('YYYYMMDDHH');
+	return {
+		folder: folder,
+		file: folder + '_' + uuidv4()
+	}
 }
 
 /************** event callback ************/
@@ -38,8 +43,33 @@ function onSubmit(e) {
 	if(el.files.length) {
 		var file = document.querySelector('input[name="upfile"]').files[0]; // input type="file"
 		var savename = genFile();
-		var uploader = stRoot.child(savename).put(file);
+		var uploader = stRoot.child(savename.folder).child(savename.file).put(file);
+		uploader.on('state_changed', onUploading, onUploadError, onUploaded);
 	}
+}
+
+function onUploading(snapshot) {
+	console.log('uploading', snapshot.bytesTransferred);
+	console.log('uploading', snapshot.totalBytes);
+	console.log('======================');
+	upfile = snapshot;
+}
+
+function onUploaded() {
+	upfile.ref.getDownloadURL().then(onSuccess).catch(onError);
+}
+
+function onUploadError(err) {
+	if(err.code === 'storage/unauthorized') location.href = '../403.html';
+	else console.log('error', err);
+}
+
+function onSuccess(r) {
+	console.log(r);
+}
+
+function onError(err) {
+	console.log(err);
 }
 
 /*************** event init ***************/
