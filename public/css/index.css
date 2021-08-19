@@ -38,13 +38,14 @@
 .list-wrapper .page-item.active .page-link {background-color: #348345; border-color: #348345;}
 
 
-/**********************  *********************/
-/**********************  *********************/
-
+/********************** footer-wrapper *********************/
+.footer-wrapper {padding: 2em 1em; text-align: center; background-color: #111; color: #fff;}
+.footer-wrapper .link-wrap {font-size: 1.5em; margin-bottom: 1em;}
+.footer-wrapper .link-wrap a:hover {text-decoration:none; color:khaki;}
 
 
 /********************** modal-wrapper *********************/
-.modal-wrapper {padding: 1em; text-align: center;}
+.modal-wrapper {padding: 1em; text-align: center; display: none;}
 .modal-wrapper .bt-write {}
 
 
