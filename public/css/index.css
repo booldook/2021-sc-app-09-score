@@ -22,7 +22,7 @@
 
 
 /********************** list-wrapper *********************/
-.list-wrapper {}
+.list-wrapper .list-tbl {border-bottom: 1px solid #dedede;}
 .list-wrapper .list-tbl th:nth-child(1) {width: 10%;}
 .list-wrapper .list-tbl th:nth-child(2) {width: auto;}
 .list-wrapper .list-tbl th:nth-child(3) {width: 15%;}
@@ -32,6 +32,9 @@
 .list-wrapper .list-tbl .icon {width: 30px; margin-right: .5em;}
 .list-wrapper .list-tbl td {vertical-align: middle;}
 .list-wrapper .list-tbl td:nth-child(2) {text-align: left;}
+
+.list-wrapper .page-link {color: #333;}
+.list-wrapper .page-item.active .page-link {background-color: #348345; border-color: #348345;}
 
 
 /**********************  *********************/
