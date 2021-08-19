@@ -23,13 +23,14 @@
 
 /********************** list-wrapper *********************/
 .list-wrapper {}
-.list-wrapper .list-tbl {}
 .list-wrapper .list-tbl th:nth-child(1) {width: 10%;}
 .list-wrapper .list-tbl th:nth-child(2) {width: auto;}
 .list-wrapper .list-tbl th:nth-child(3) {width: 15%;}
 .list-wrapper .list-tbl th:nth-child(4) {width: 15%;}
 .list-wrapper .list-tbl th:nth-child(5) {width: 10%;}
 
+.list-wrapper .list-tbl .icon {width: 30px; margin-right: .5em;}
+.list-wrapper .list-tbl td {vertical-align: middle;}
 .list-wrapper .list-tbl td:nth-child(2) {text-align: left;}
 
 
@@ -74,4 +75,5 @@
 	.list-wrapper .list-tbl th:nth-child(1) {width: 20%;}
 	.list-wrapper .list-tbl th:nth-child(3) {display: none;}
 	.list-wrapper .list-tbl td:nth-child(3) {display: none;}
+	.list-wrapper .list-tbl .icon {width: 24px;}
 }
