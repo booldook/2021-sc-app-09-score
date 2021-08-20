@@ -89,6 +89,7 @@ body > .gnb {min-height: calc(100vh - 131px);}
 }
 
 @media (max-width: 575px) {
+	.header-wrapper .navi-wrap .name {display: none;}
 	.list-wrapper .list-tbl th:nth-child(1) {width: 20%;}
 	.list-wrapper .list-tbl th:nth-child(3) {display: none;}
 	.list-wrapper .list-tbl td:nth-child(3) {display: none;}

@@ -162,7 +162,7 @@
 				</ul>
 			</div>
 			<div class="text-center py-3">
-				<button class="btn btn-success" onclick="$('.write-wrapper').stop().fadeIn(300);">글작성</button>
+				<button class="bt-write btn btn-success">글작성</button>
 			</div>
 		</section>
 	</div>
@@ -184,19 +184,21 @@
 			<div class="title-wrap">
 				<h2 class="title">게시글 작성</h2>
 			</div>
-			<form>
+			<form name="writeForm">
 				<table class="write-tbl">
 					<tbody>
 						<tr>
 							<td class="title">제목 <span class="require">*</span></td>
 							<td class="content">
-								<input type="text" name="title" class="form-control" placeholder="제목을 적어주세요">
+								<input type="text" name="title" class="form-control" placeholder="제목을 적어주세요" required>
+								<div class="required-comment"></div>
 							</td>
 						</tr>
 						<tr>
 							<td class="title">작성자 <span class="require">*</span></td>
 							<td class="content">
-								<input type="text" name="writer" class="form-control" placeholder="작성자를 적어주세요">
+								<input type="text" name="writer" class="form-control" placeholder="작성자를 적어주세요" required>
+								<div class="required-comment"></div>
 							</td>
 						</tr>
 						<tr>
@@ -215,7 +217,7 @@
 					</tbody>
 				</table>
 				<div class="bt-wrap">
-					<button class="btn btn-sm btn-success bt-write">글쓰기</button>
+					<button class="btn btn-sm btn-success bt-save">글쓰기</button>
 					<button class="btn btn-sm btn-danger bt-reset" type="reset">다시작성</button>
 				</div>
 			</form>
