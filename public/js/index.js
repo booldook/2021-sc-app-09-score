@@ -6,6 +6,17 @@ $().parents()		// 내 조상들				parentNode
 $().siblings()	// 내 형제자매
 $().children()	// 내 자식					childNodes
 $().find()			// 내 자손					childNodes
+
+firebase data처리
+1. 실시간
+db.on('child_added', onAdded);			// return 추가된 데이터
+db.on('child_changed', onChanged);	// return 수정된 데이터
+db.on('child_removed', onRemoved);	// return 삭제된 데이터
+2. 이벤트에 의해서...
+db.push().key												// 데이터 저장
+db.set({})													// 데이터 수정
+db.remove()													// 데이터 삭제
+db.get()														// 데이터 가져오기
 */
 
 
@@ -156,7 +167,9 @@ writeForm.writer.addEventListener('blur', onRequiredValid);
 writeForm.writer.addEventListener('keyup', onRequiredValid);
 writeForm.upfile.addEventListener('change', onUpfileChange);
 
-
+db.on('child_added', onAdded);
+db.on('child_changed', onChanged);
+db.on('child_removed', onRemoved);
 
 
 /*************** start init ***************/
