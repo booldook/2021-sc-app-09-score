@@ -191,21 +191,21 @@
 							<td class="title">제목 <span class="required">*</span></td>
 							<td class="content">
 								<input type="text" name="title" class="form-control" placeholder="제목을 적어주세요">
-								<div class="required-comment" style="display: none;">필수사항 입니다</div>
+								<div class="required-comment">필수사항 입니다</div>
 							</td>
 						</tr>
 						<tr>
 							<td class="title">작성자 <span class="required">*</span></td>
 							<td class="content">
 								<input type="text" name="writer" class="form-control" placeholder="작성자를 적어주세요">
-								<div class="required-comment" style="display: none;">필수사항 입니다</div>
+								<div class="required-comment">필수사항 입니다</div>
 							</td>
 						</tr>
 						<tr>
 							<td class="title">이미지/동영상</td>
 							<td class="content">
 								<input type="file" name="upfile" class="form-control-file">
-								<div class="summary">* 파일은 이미지(jpg|png|gif) 또는 동영상(mp4)만 업로드가 가능합니다.</div>
+								<div class="summary required-comment">* 파일은 이미지(jpg|png|gif) 또는 동영상(mp4)만 업로드가 가능합니다.</div>
 							</td>
 						</tr>
 						<tr>
@@ -218,11 +218,11 @@
 				</table>
 				<div class="bt-wrap">
 					<button class="btn btn-sm btn-success bt-save">글쓰기</button>
-					<button class="btn btn-sm btn-danger bt-reset" type="reset">다시작성</button>
+					<button class="btn btn-sm btn-danger bt-reset" type="button">다시작성</button>
 				</div>
 			</form>
 		</div>
-		<i class="bt-close material-icons" onclick="$('.write-wrapper').stop().fadeOut(300);">close</i>
+		<i class="bt-close material-icons">close</i>
 	</aside>
 
 	<script src="../js/index.js"></script>

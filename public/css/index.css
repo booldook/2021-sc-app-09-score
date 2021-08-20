@@ -56,10 +56,11 @@ body > .gnb {min-height: calc(100vh - 131px);}
 .write-wrapper .write-tbl tr:not(:last-child) td {border-bottom: 1px solid #dcdcdc;}
 .write-wrapper .bt-wrap {text-align: center;}
 .write-wrapper .required {color: #dc3545;}
-.write-wrapper .summary {padding: .5em 0; font-size: .875em; color: #4174aa;}
-.write-wrapper .summary.active {color: #dc3545;}
+.write-wrapper .summary.required-comment {padding: .5em 0; font-size: .875em; color: #4174aa; display: block;}
+.write-wrapper .summary.required-comment.active {color: #dc3545; display: block;}
 .write-wrapper textarea {height: 200px; overflow-y: auto;}
-.write-wrapper .required-comment {padding-top: .5em; font-size: .875em; color: #dc3545;}
+.write-wrapper .required-comment {padding-top: .5em; font-size: .875em; color: #dc3545; display: none;}
+.write-wrapper .required-comment.active {display: block;}
 .write-wrapper .form-control.active {border-color: #dc3545;}
 .write-wrapper .form-control.active:focus {box-shadow: 0 0 0 0.2rem rgb(255 50 0 / 25%);}
 
