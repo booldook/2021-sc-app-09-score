@@ -17,6 +17,7 @@ var firebaseStorage = firebase.storage();
 var db = firebaseDatabase.ref('root/board');
 var storage = firebaseStorage.ref('root/board');
 var user = null;
+var allowType = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
 
 /************** element init **************/
 var btSave = document.querySelector('.write-wrapper .bt-save');				// 글작성 버튼
@@ -112,8 +113,18 @@ function requiredValid(el) {
 }
 
 
-function onUpfileBlur(e) { // upfile에서 blur되면
-
+function onUpfileChange(e) { // upfile에서 change되면
+	var next = $(el).next()[0];
+	if(this.files.length > 0 && allowType.indexOf(this.files[0].type) === -1) {
+		this.classList.add('active');
+		next.classList.add('active');
+		return false; 
+	}
+	else {
+		this.classList.remove('active');
+		next.classList.remove('active');
+		return true;
+	}
 }
 
 /*************** event init ***************/
@@ -128,7 +139,7 @@ writeForm.title.addEventListener('blur', onRequiredValid);
 writeForm.title.addEventListener('keyup', onRequiredValid);
 writeForm.writer.addEventListener('blur', onRequiredValid);
 writeForm.writer.addEventListener('keyup', onRequiredValid);
-writeForm.upfile.addEventListener('blur', onUpfileBlur);
+writeForm.upfile.addEventListener('change', onUpfileChange);
 
 
 
