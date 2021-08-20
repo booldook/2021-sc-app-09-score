@@ -57,7 +57,7 @@ body > .gnb {min-height: calc(100vh - 131px);}
 .write-wrapper .bt-wrap {text-align: center;}
 .write-wrapper .required {color: #dc3545;}
 .write-wrapper .summary.required-comment {padding: .5em 0; font-size: .875em; color: #4174aa; display: block;}
-.write-wrapper .summary.required-comment.active {color: #dc3545; display: block;}
+.write-wrapper .summary.required-comment.active {color: #dc3545; display: block; text-decoration: underline;}
 .write-wrapper textarea {height: 200px; overflow-y: auto;}
 .write-wrapper .required-comment {padding-top: .5em; font-size: .875em; color: #dc3545; display: none;}
 .write-wrapper .required-comment.active {display: block;}
