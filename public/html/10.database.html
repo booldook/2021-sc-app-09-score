@@ -1,3 +1,4 @@
+<script src="../js/lodash.min.js"></script>
 <script src="/__/firebase/8.9.1/firebase-app.js"></script>
 <script src="/__/firebase/8.9.1/firebase-database.js"></script>
 <script src="/__/firebase/init.js?useEmulator=true"></script>
@@ -15,16 +16,31 @@ var db = firebase.database().ref('root/board');
 // db.child(key).remove();
 // db.get().then(onGet).catch(onError); // 모든데이터 가져오기
 // db.orderByKey().get().then(onGet).catch(onError); // 모든 데이터를 key오름차순으로 가져오기
+// db.orderByKey().once().then(onGet).catch(onError); // 모든 데이터를 key오름차순으로 한번만 가져오기
 // db.orderByChild('readnum').get().then(onGet).catch(onError); // readnum으로 정렬
 // db.orderByKey().limitToFirst(5).get().then(onGet).catch(onError); // 맨 처음부터 몇개
-db.orderByKey().limitToLast(5).get().then(onGet).catch(onError); // 맨 처음부터 몇개
 
-function onGet(r) {
-	console.log(r);
-	r.forEach(function(v, i) {
+/*
+db.orderByKey().limitToLast(5).get().then(onGetLast).catch(onError); // 맨 마지막부터 몇개
+function onGetLast(r) {
+	var arr = [];
+	r.forEach(function(v, i) { arr.push(v) }); // 객체를 배열에 넣고,
+	arr.reverse().forEach(function(v, i) {	// 배열을 뒤집어서 순회시키고,
 		console.log(v.key);
-	})
+	});
 }
+*/
+
+// SELECT * FROM board ORDER BY key DESC LIMIT 3, 3;
+db.orderByKey().endBefore('-MhXFuwj_hvBBH503fNE').limitToLast(3).get().then(onGet).catch(onError);
+function onGet(r) {
+	r.forEach(function(v, i) { 
+		console.log(v.key); 
+	});
+}
+
+
+
 
 function onError(err) {
 	console.log(err);

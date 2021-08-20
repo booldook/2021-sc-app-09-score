@@ -94,6 +94,10 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	var writer = writeForm.writer;
 	var upfile = writeForm.upfile;
 	var content = writeForm.content;
+	if(!user) {
+		alert('로그인 후 이용하세요.');
+		return false;
+	}
 	if(!requiredValid(title)) {
 		title.focus();
 		return false;
@@ -111,8 +115,32 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	data.title = title.value;
 	data.writer = writer.value;
 	data.content = content.value;
-	data.file = (upfile.files.length) ? upfile.files[0] : {};
-	db.push(data).key; // firebase저장
+	data.createAt = new Date().getTime();
+	if(upfile.files.length) { // 파일이 존재하면 처리 로직
+			var file = upfile.files[0];
+			var savename = genFile();
+			var uploader = storage.child(savename.folder).child(savename.file).put(file);
+			uploader.on('state_changed', onUploading, onUploadError, onUploaded);
+	}
+	else {
+		db.push(data).key; // firebase저장
+	}
+
+	function onUploading(snapshot) { // 파일이 업로드 되는 동안
+		console.log('uploading', snapshot.bytesTransferred);
+		console.log('uploading', snapshot.totalBytes);
+		console.log('======================');
+		upfile = snapshot;
+	}
+	
+	function onUploaded() { // 파일 업로드 완료 후
+		upfile.ref.getDownloadURL().then(onSuccess).catch(onError);
+	}
+	
+	function onUploadError(err) { // 파일 업로드 실패 시
+		if(err.code === 'storage/unauthorized') location.href = '../403.html';
+		else console.log('error', err);
+	}
 }
 
 function onRequiredValid(e) { // title, writer에서 blur, keyup되면
