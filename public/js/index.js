@@ -1,3 +1,14 @@
+/* 
+$().next() 			// 바로 다음				nextSibling
+$().prev()			// 바로 전					previousSibling
+$().parent()		// 내 부모					parentNode
+$().parents()		// 내 조상들				parentNode
+$().siblings()	// 내 형제자매
+$().children()	// 내 자식					childNodes
+$().find()			// 내 자손					childNodes
+*/
+
+
 /*************** global init **************/
 var auth = firebase.auth();
 var googleAuth = new firebase.auth.GoogleAuthProvider();
@@ -60,6 +71,25 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	}
 }
 
+function onRequiredValid(e) { // title, writer에서 blur, keyup되면
+	var el = e.target;
+	var next = $(e.target).next()[0];
+	if(el.value.trim() === '') {
+		el.classList.add('active');
+		next.style.display = 'block';
+		return false;
+	}
+	else {
+		el.classList.remove('active');
+		next.style.display = 'none';
+		return true;
+	}
+}
+
+
+function onUpfileBlur(e) { // upfile에서 blur되면
+
+}
 
 /*************** event init ***************/
 auth.onAuthStateChanged(onAuthChanged);
@@ -67,6 +97,11 @@ btLogin.addEventListener('click', onLogin);
 btLogout.addEventListener('click', onLogout);
 btWrite.addEventListener('click', onWrite);
 writeForm.addEventListener('submit', onWriteSubmit);
+writeForm.title.addEventListener('blur', onRequiredValid);
+writeForm.title.addEventListener('keyup', onRequiredValid);
+writeForm.writer.addEventListener('blur', onRequiredValid);
+writeForm.writer.addEventListener('keyup', onRequiredValid);
+writeForm.upfile.addEventListener('blur', onUpfileBlur);
 
 
 
