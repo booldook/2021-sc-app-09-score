@@ -42,16 +42,11 @@ var btReset = document.querySelector('.write-wrapper .bt-reset');			// 글작성
 var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 모달창
 var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
-var observerEl = document.querySelector('.observer-el');
 var tbody = document.querySelector('.list-tbl tbody');
-var gnb = document.querySelector('.gnb');
+var tr;
 
-var page = 1;
-var listCnt = 1;
-var pagerCnt = 3;
-var totalRecord = 0;
-var observer;
-
+var observer; 		// IntersectionObserver의 Instance
+var listCnt = 5; 	// 데이터를 한번에 불러올 갯수
 
 /************** user function *************/
 function listInit() {
@@ -74,7 +69,7 @@ function setHTML(k, v) {
 	html += '<td>0</td>';
 	html += '</tr>';
 	tbody.innerHTML += html;
-	var tr = tbody.querySelectorAll('tr');
+	tr = tbody.querySelectorAll('tr');
 	observer.observe(tr[tr.length - 1]);
 	sortTr();
 }
@@ -89,9 +84,8 @@ function sortTr() {
 /************** event callback ************/
 function onObserver(el, observer) {
 	el.forEach(function(v) {
-		console.log(v.isIntersecting);
 		if(v.isIntersecting) {
-			var tr = tbody.querySelectorAll('tr');
+			tr = tbody.querySelectorAll('tr');
 			var last = Number(tr[tr.length - 1].dataset['idx']);
 			ref.startAfter(last).limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
 			observer.unobserve(v.target);
@@ -101,7 +95,6 @@ function onObserver(el, observer) {
 
 function onGetData(r) {
 	r.forEach(function(v, i) {
-		console.log(v.key);
 		setHTML(v.key, v.val());
 	});
 }
@@ -310,7 +303,7 @@ loading.addEventListener('click', onLoadingClick);
 
 
 /*************** start init ***************/
-listInit();
 observer = new IntersectionObserver(onObserver, {rootMargin: '-100px'});
+listInit();
 
 
