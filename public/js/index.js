@@ -90,17 +90,6 @@ function setHTML(k, v) {
 	sortTr();
 }
 
-function setRecentHTML(k, v) {
-
-	console.log(k, v);
-	var html  = '<li class="list" data-idx="'+v.idx+'" style="background-image: url(\''+v.upfile.path+'\');">';
-	html += '<div class="ratio"></div>';
-	html += '</li>';
-	console.log(html);
-	recent.innerHTML += html;
-
-}
-
 function sortTr() {
 	var total = tbody.querySelectorAll('tr').length;
 	tbody.querySelectorAll('tr').forEach(function(v, i) {
@@ -131,18 +120,17 @@ function onGetRecent(r) {
 	if(r.numChildren() > 0) { // 데이터가 존재함
 		r.forEach(function(v, i) {
 			var isImg = v.val().upfile && v.val().upfile.file.type !== allowType[3];
-			if(isImg) setRecentHTML(v.key, v.val());
+			if(isImg) {
+				var html  = '<li class="list" data-idx="'+v.val().idx+'" style="background-image: url(\''+v.val().upfile.path+'\');">';
+				html += '<div class="ratio"></div>';
+				html += '</li>';
+				recent.innerHTML += html;
+			}
 			var li = recent.querySelectorAll('li');
 			var cnt = li.length;
 			var last = cnt - 1;
-			if(last < 6) recentInit(ref.startAfter(v.val().idx));
-			else {
-				console.log('완료');
-			}
+			if(last < 5) recentInit(ref.startAfter(v.val().idx));
 		});
-	}
-	else { // 데이터가 존재하지 않음
-		console.log('완료');
 	}
 }
 
@@ -191,7 +179,6 @@ function onWriteReset(e) {
 	writeForm.writer.classList.remove('active');
 	writeForm.content.value = '';
 	document.querySelectorAll('.required-comment').forEach(function(v, i) {
-		console.log(v);
 		v.classList.remove('active');
 	});
 }
@@ -202,6 +189,7 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	var writer = writeForm.writer;
 	var upfile = writeForm.upfile;
 	var content = writeForm.content;
+	var upload;
 	if(!user) {
 		alert('로그인 후 이용하세요.');
 		return false;
@@ -241,9 +229,8 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 				size: upfile.files[0].size,
 				type: upfile.files[0].type
 			}
-			console.log(file);
 			var savename = genFile();
-			var uploader = storage.child(savename.folder).child(savename.file).put(file);
+			var uploader = storage.child(savename.folder).child(savename.file).put(upfile.files[0]);
 			uploader.on('state_changed', onUploading, onUploadError, onUploaded);
 			data.upfile = { folder: 'root/board/'+savename.folder, name: savename.file, file: file };
 		}
@@ -251,6 +238,8 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 			db.push(data).key; // firebase저장
 			onClose();
 			listInit();
+			recent.innerHTML = '';
+			recentInit(ref);
 		}
 	}
 
@@ -273,10 +262,13 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	}
 
 	function onSuccess(r) { // r: 실제 웹으로 접근 가능한 경로
+		console.log(r);
 		data.upfile.path = r;
 		db.push(data).key; // firebase저장
 		onClose();
 		listInit();
+		recent.innerHTML = '';
+		recentInit(ref);
 	}
 
 	function onError(err) {
@@ -352,6 +344,7 @@ loading.addEventListener('click', onLoadingClick);
 /*************** start init ***************/
 observer = new IntersectionObserver(onObserver, {rootMargin: '-100px'});
 listInit();
+recent.innerHTML = '';
 recentInit(ref);
 
 
