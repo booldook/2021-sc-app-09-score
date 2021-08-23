@@ -24,6 +24,7 @@ body > .gnb {min-height: calc(100vh - 131px);}
 
 
 /********************** list-wrapper *********************/
+.list-wrapper .title-wrap {display: flex; justify-content: space-between; align-items: flex-end;}
 .list-wrapper .list-tbl {border-bottom: 1px solid #dedede;}
 .list-wrapper .list-tbl th:nth-child(1) {width: 10%;}
 .list-wrapper .list-tbl th:nth-child(2) {width: auto;}

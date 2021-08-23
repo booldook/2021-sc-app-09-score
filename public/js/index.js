@@ -44,12 +44,14 @@ var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
 var observerEl = document.querySelector('.observer-el');
 var tbody = document.querySelector('.list-tbl tbody');
+var gnb = document.querySelector('.gnb');
 
 var page = 1;
-var listCnt = 3;
+var listCnt = 1;
 var pagerCnt = 3;
 var totalRecord = 0;
-var observer = new IntersectionObserver(onObserver, {});
+var observer;
+
 
 /************** user function *************/
 function listInit() {
@@ -72,6 +74,8 @@ function setHTML(k, v) {
 	html += '<td>0</td>';
 	html += '</tr>';
 	tbody.innerHTML += html;
+	var tr = tbody.querySelectorAll('tr');
+	observer.observe(tr[tr.length - 1]);
 	sortTr();
 }
 
@@ -88,14 +92,9 @@ function onObserver(el, observer) {
 		console.log(v.isIntersecting);
 		if(v.isIntersecting) {
 			var tr = tbody.querySelectorAll('tr');
-			if(tr.length > 0) {
-				console.log(tr[tr.length - 1]);
-				var last = Number(tr[tr.length - 1].dataset['idx']);
-				ref.startAfter(last).limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
-			}
-			else {
-				ref.limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
-			}
+			var last = Number(tr[tr.length - 1].dataset['idx']);
+			ref.startAfter(last).limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+			observer.unobserve(v.target);
 		}
 	});
 }
@@ -311,6 +310,7 @@ loading.addEventListener('click', onLoadingClick);
 
 
 /*************** start init ***************/
-// listInit();
-observer.observe(observerEl);
+listInit();
+observer = new IntersectionObserver(onObserver, {rootMargin: '-100px'});
+
 
