@@ -1,4 +1,7 @@
 /* 
+$().method().method().mothod()
+
+
 $().next() 			// 바로 다음				nextSibling
 $().prev()			// 바로 전					previousSibling
 $().parent()		// 내 부모					parentNode
@@ -59,9 +62,8 @@ function listInit() { // 처음, 데이터를 생성
 		.catch(onGetError);
 }
 
-function recentInit() { 
+function recentInit(ref) { 
 	ref
-		// .startAfter()
 		.limitToFirst(1)
 		.get()
 		.then(onGetRecent)
@@ -89,15 +91,14 @@ function setHTML(k, v) {
 }
 
 function setRecentHTML(k, v) {
-	if(v.upfile && v.upfile.file.type !== exts[3]) {
-		console.log(v.upfile.file.type);
-		var html  = '<li class="list" style="background-image: url(\''+v.upfile.path+'\');">';
-		html += '<div class="ratio"></div>';
-		html += '</li>';
-		recent.innerHTML += html;
-	}
-	var len = recent.querySelectorAll('li').length;
-	if(len < 5) recentInit();
+
+	console.log(k, v);
+	var html  = '<li class="list" data-idx="'+v.idx+'" style="background-image: url(\''+v.upfile.path+'\');">';
+	html += '<div class="ratio"></div>';
+	html += '</li>';
+	console.log(html);
+	recent.innerHTML += html;
+
 }
 
 function sortTr() {
@@ -125,10 +126,24 @@ function onGetData(r) {
 	});
 }
 
+
 function onGetRecent(r) {
-	r.forEach(function(v, i) {
-		if(v && v.key) setRecentHTML(v.key, v.val());
-	});
+	if(r.numChildren() > 0) { // 데이터가 존재함
+		r.forEach(function(v, i) {
+			var isImg = v.val().upfile && v.val().upfile.file.type !== allowType[3];
+			if(isImg) setRecentHTML(v.key, v.val());
+			var li = recent.querySelectorAll('li');
+			var cnt = li.length;
+			var last = cnt - 1;
+			if(last < 6) recentInit(ref.startAfter(v.val().idx));
+			else {
+				console.log('완료');
+			}
+		});
+	}
+	else { // 데이터가 존재하지 않음
+		console.log('완료');
+	}
 }
 
 function onGetError(err) {
@@ -337,6 +352,22 @@ loading.addEventListener('click', onLoadingClick);
 /*************** start init ***************/
 observer = new IntersectionObserver(onObserver, {rootMargin: '-100px'});
 listInit();
-recentInit();
+recentInit(ref);
 
 
+
+
+/* var isImg = v.val().upfile && v.val().upfile.file.type !== allowType[3]; // upfile이 이미지인 경우
+	if(isImg) setRecentHTML(v.key, v.val());
+	else { // 이미지가 아님
+		if(recent.querySelector('li')) {
+			var li = recent.querySelectorAll('li');
+			var idx = li[li.length - 1].dataset['idx'];
+			recentInit(ref.startAfter(idx));
+		}
+		else {
+
+			recentInit(ref);
+		}
+	}
+	*/
