@@ -42,21 +42,24 @@ var btReset = document.querySelector('.write-wrapper .bt-reset');			// 글작성
 var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 모달창
 var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
+var observerEl = document.querySelector('.observer-el');
 var tbody = document.querySelector('.list-tbl tbody');
 
 var page = 1;
 var listCnt = 3;
 var pagerCnt = 3;
 var totalRecord = 0;
+var observer = new IntersectionObserver(onObserver, {});
 
 /************** user function *************/
 function listInit() {
+	tbody.innerHTML = '';
 	ref.limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
 }
 
 function setHTML(k, v) {
 	var n = tbody.querySelectorAll('tr').length + 1;
-	var html = '<tr data-idx="'+v.idx+'" data-key="'+v.key+'">';
+	var html = '<tr data-idx="'+v.idx+'" data-key="'+k+'">';
 	html += '<td>'+n+'</td>';
 	html += '<td>';
 	if(v.upfile) {
@@ -69,9 +72,34 @@ function setHTML(k, v) {
 	html += '<td>0</td>';
 	html += '</tr>';
 	tbody.innerHTML += html;
+	sortTr();
+}
+
+function sortTr() {
+	var total = tbody.querySelectorAll('tr').length;
+	tbody.querySelectorAll('tr').forEach(function(v, i) {
+		v.querySelector('td').innerHTML = total - i;
+	});
 }
 
 /************** event callback ************/
+function onObserver(el, observer) {
+	el.forEach(function(v) {
+		console.log(v.isIntersecting);
+		if(v.isIntersecting) {
+			var tr = tbody.querySelectorAll('tr');
+			if(tr.length > 0) {
+				console.log(tr[tr.length - 1]);
+				var last = Number(tr[tr.length - 1].dataset['idx']);
+				ref.startAfter(last).limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+			}
+			else {
+				ref.limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+			}
+		}
+	});
+}
+
 function onGetData(r) {
 	r.forEach(function(v, i) {
 		console.log(v.key);
@@ -183,6 +211,7 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 		else {
 			db.push(data).key; // firebase저장
 			onClose();
+			listInit();
 		}
 	}
 
@@ -208,6 +237,7 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 		data.upfile.path = r;
 		db.push(data).key; // firebase저장
 		onClose();
+		listInit();
 	}
 
 	function onError(err) {
@@ -281,5 +311,6 @@ loading.addEventListener('click', onLoadingClick);
 
 
 /*************** start init ***************/
-listInit();
+// listInit();
+observer.observe(observerEl);
 
