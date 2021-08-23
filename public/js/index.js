@@ -47,12 +47,25 @@ var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
 var tbody = document.querySelector('.list-tbl tbody');
 var recent = document.querySelector('.recent-wrapper .list-wp');
+var listWrapper = document.querySelector('.list-wrapper');
+var viewWrapper = document.querySelector('.view-wrapper');
 var tr;
 
 var observer; 		// IntersectionObserver의 Instance
 var listCnt = 5; 	// 데이터를 한번에 불러올 갯수
 
 /************** user function *************/
+function goView(k) {
+	// location.href = './view.html?key='+k;
+	listWrapper.style.display = 'none';
+	viewWrapper.style.display = 'block';
+	db
+	.child(k)
+	.get()
+	.then(onGetView)
+	.catch(onGetError);
+}
+
 function listInit() { // 처음, 데이터를 생성
 	tbody.innerHTML = '';
 	ref
@@ -74,7 +87,7 @@ function setHTML(k, v) {
 	var n = tbody.querySelectorAll('tr').length + 1;
 	var html = '<tr data-idx="'+v.idx+'" data-key="'+k+'">';
 	html += '<td>'+n+'</td>';
-	html += '<td>';
+	html += '<td  onclick="goView(\''+k+'\');">';
 	if(v.upfile) {
 		html += '<img src="'+exts[allowType.indexOf(v.upfile.file.type)]+'" class="icon">';
 	}
@@ -98,6 +111,11 @@ function sortTr() {
 }
 
 /************** event callback ************/
+function onGetView(r) {
+	console.log(r.key, r.val());
+	viewWrapper.innerHTML = r.val().title;
+}
+
 function onObserver(el, observer) {
 	el.forEach(function(v) {
 		if(v.isIntersecting) {
@@ -121,7 +139,7 @@ function onGetRecent(r) {
 		r.forEach(function(v, i) {
 			var isImg = v.val().upfile && v.val().upfile.file.type !== allowType[3];
 			if(isImg) {
-				var html  = '<li class="list" data-idx="'+v.val().idx+'" style="background-image: url(\''+v.val().upfile.path+'\');">';
+				var html  = '<li class="list" data-idx="'+v.val().idx+'" style="background-image: url(\''+v.val().upfile.path+'\');" onclick="goView(\''+v.key+'\');">';
 				html += '<div class="ratio"></div>';
 				html += '</li>';
 				recent.innerHTML += html;
