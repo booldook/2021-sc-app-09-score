@@ -43,15 +43,29 @@ var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 �
 var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
 var tbody = document.querySelector('.list-tbl tbody');
+var recent = document.querySelector('.recent-wrapper .list-wp');
 var tr;
 
 var observer; 		// IntersectionObserver의 Instance
 var listCnt = 5; 	// 데이터를 한번에 불러올 갯수
 
 /************** user function *************/
-function listInit() {
+function listInit() { // 처음, 데이터를 생성
 	tbody.innerHTML = '';
-	ref.limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+	ref
+		.limitToFirst(listCnt)
+		.get()
+		.then(onGetData)
+		.catch(onGetError);
+}
+
+function recentInit() { 
+	ref
+		// .startAfter()
+		.limitToFirst(1)
+		.get()
+		.then(onGetRecent)
+		.catch(onGetError);
 }
 
 function setHTML(k, v) {
@@ -72,6 +86,18 @@ function setHTML(k, v) {
 	tr = tbody.querySelectorAll('tr');
 	observer.observe(tr[tr.length - 1]);
 	sortTr();
+}
+
+function setRecentHTML(k, v) {
+	if(v.upfile && v.upfile.file.type !== exts[3]) {
+		console.log(v.upfile.file.type);
+		var html  = '<li class="list" style="background-image: url(\''+v.upfile.path+'\');">';
+		html += '<div class="ratio"></div>';
+		html += '</li>';
+		recent.innerHTML += html;
+	}
+	var len = recent.querySelectorAll('li').length;
+	if(len < 5) recentInit();
 }
 
 function sortTr() {
@@ -96,6 +122,12 @@ function onObserver(el, observer) {
 function onGetData(r) {
 	r.forEach(function(v, i) {
 		setHTML(v.key, v.val());
+	});
+}
+
+function onGetRecent(r) {
+	r.forEach(function(v, i) {
+		if(v && v.key) setRecentHTML(v.key, v.val());
 	});
 }
 
@@ -305,5 +337,6 @@ loading.addEventListener('click', onLoadingClick);
 /*************** start init ***************/
 observer = new IntersectionObserver(onObserver, {rootMargin: '-100px'});
 listInit();
+recentInit();
 
 
