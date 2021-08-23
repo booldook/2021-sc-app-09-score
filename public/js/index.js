@@ -26,6 +26,7 @@ var googleAuth = new firebase.auth.GoogleAuthProvider();
 var firebaseDatabase = firebase.database();
 var firebaseStorage = firebase.storage();
 var db = firebaseDatabase.ref('root/board');
+var ref = db.orderByChild('sort');
 var storage = firebaseStorage.ref('root/board');
 var user = null;
 var allowType = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
@@ -41,21 +42,45 @@ var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 �
 var writeForm = document.writeForm;																		// 글작성 form
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
 
-
+var page = 1;
+var listCnt = 3;
+var pagerCnt = 3;
+var totalRecord = 0;
 
 /************** user function *************/
+function listInit() {
+	// db.once().then().catch();
+	if(page === 1)
+		ref.limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+	else
+		ref.startAfter(-1629680457229).limitToFirst(listCnt).get().then(onGetData).catch(onGetError);
+}
 
 
 /************** event callback ************/
+function onGetData(r) {
+	console.log(r.numChildren());
+	// totalRecord = r.numChildren();
+	r.forEach(function(v, i) {
+		console.log(v.key);
+	});
+}
+
+function onGetError(err) {
+	console.log(err)
+}
+
 function onAuthChanged(r) { // login, logout 상태가 변하면...
 	user = r;
 	if(user) {	// 로그인 되면 UI가 할일
 		btLogin.style.display = 'none';
 		btLogout.style.display = 'block';
+		btWrite.style.display = 'inline-block';
 	}
 	else {	// 로그아웃 되면 UI가 할일
 		btLogin.style.display = 'block';
 		btLogout.style.display = 'none';
+		btWrite.style.display = 'none';
 	}
 }
 
@@ -119,6 +144,11 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	data.writer = writer.value;
 	data.content = content.value;
 	data.createAt = new Date().getTime();
+	data.sort = -data.createAt;
+	db.limitToLast(1).get().then(getLastIdx).catch(onGetError);
+	function getLastIdx(r) {
+		console.log(r);
+	}
 	if(upfile.files.length) { // 파일이 존재하면 처리 로직
 			var upload = null;
 			var file = upfile.files[0];
@@ -220,10 +250,12 @@ writeForm.writer.addEventListener('keyup', onRequiredValid);
 writeForm.upfile.addEventListener('change', onUpfileChange);
 loading.addEventListener('click', onLoadingClick);
 
+
 // db.on('child_added', onAdded);
 // db.on('child_changed', onChanged);
 // db.on('child_removed', onRemoved);
 
 
 /*************** start init ***************/
+listInit();
 

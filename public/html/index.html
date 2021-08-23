@@ -42,6 +42,7 @@
 	<script src="../js/moment.min.js"></script>
 	<script src="../js/lodash.min.js"></script>
 	<script src="../js/uuidv4.min.js"></script>
+	<script src="../js/promise.polyfill.min.js"></script>
 	<script src="../js/util.js"></script>
 </head>
 <body>
@@ -137,7 +138,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="pager-wrap">
+			<!--<div class="pager-wrap">
 				<ul class="pagination justify-content-center">
 					<li class="page-item">
 						<a class="page-link"><i class="material-icons">first_page</i></a>
@@ -161,9 +162,9 @@
 						<a class="page-link"><i class="material-icons">last_page</i></a>
 					</li>
 				</ul>
-			</div>
+			</div>-->
 			<div class="text-center py-3">
-				<button class="bt-write btn btn-success">글작성</button>
+				<button class="bt-write btn btn-success" style="display: none;">글작성</button>
 			</div>
 		</section>
 	</div>
