@@ -30,6 +30,7 @@ var ref = db.orderByChild('idx');
 var storage = firebaseStorage.ref('root/board');
 var user = null;
 var allowType = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
+var exts = ['../img/jpg.png', '../img/png.png', '../img/gif.png', '../img/video.png'];
 
 /************** element init **************/
 var btSave = document.querySelector('.write-wrapper .bt-save');				// 글작성 버튼
@@ -57,17 +58,23 @@ function setHTML(k, v) {
 	var n = tbody.querySelectorAll('tr').length + 1;
 	var html = '<tr data-idx="'+v.idx+'" data-key="'+v.key+'">';
 	html += '<td>'+n+'</td>';
-	html += '<td><img src="../img/video.png" class="icon">아버지를 아버지라...</td>';
-	html += '<td>홍길동</td>';
-	html += '<td>2021-08-19</td>';
-	html += '<td>3</td>';
+	html += '<td>';
+	if(v.upfile) {
+		html += '<img src="'+exts[allowType.indexOf(v.upfile.file.type)]+'" class="icon">';
+	}
+	html += v.title;
+	html += '</td>';
+	html += '<td>'+v.writer+'</td>';
+	html += '<td>'+moment(v.createdAt).format('YYYY-MM-DD')+'</td>';
+	html += '<td>0</td>';
 	html += '</tr>';
+	tbody.innerHTML += html;
 }
 
 /************** event callback ************/
 function onGetData(r) {
 	r.forEach(function(v, i) {
-		console.log('hi')
+		console.log(v.key);
 		setHTML(v.key, v.val());
 	});
 }
