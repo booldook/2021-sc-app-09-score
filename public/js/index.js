@@ -203,10 +203,16 @@ function onDelete(e) {
 	if(confirm('정말로 삭제하시겠습니까?')) {
 		db.child(key).once('value', function(v) {
 			if(user && v.val().user === user.uid) {
-				if(v.val().upfile) removeFile(v.val().upfile.name, key, function() {
+				if(v.val().upfile) {
+					removeFile(v.val().upfile.name, key, function() {
+						db.child(key).remove();
+						viewShow('LIST');
+					});
+				}
+				else {
 					db.child(key).remove();
 					viewShow('LIST');
-				});
+				}
 			}
 			else {
 				alert('권한이 없습니다.');
