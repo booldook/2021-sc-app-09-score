@@ -49,36 +49,16 @@ var tbody = document.querySelector('.list-tbl tbody');
 var recent = document.querySelector('.recent-wrapper .list-wp');
 var listWrapper = document.querySelector('.list-wrapper');
 var viewWrapper = document.querySelector('.view-wrapper');
-var updateWrapper = document.querySelector('.update-wrapper');
 var tr;
 
 var observer; 		// IntersectionObserver의 Instance
 var listCnt = 5; 	// 데이터를 한번에 불러올 갯수
 
 /************** user function *************/
-function viewShow(el) {
-	switch(el) {
-		case 'LIST':
-			listWrapper.style.display = 'block';
-			viewWrapper.style.display = 'none';
-			updateWrapper.style.display = 'none';
-			break;
-		case 'VIEW':
-			listWrapper.style.display = 'none';
-			viewWrapper.style.display = 'block';
-			updateWrapper.style.display = 'none';
-			break;
-		case 'UPDATE':
-			listWrapper.style.display = 'none';
-			viewWrapper.style.display = 'none';
-			updateWrapper.style.display = 'block';
-			break;
-	}
-}
-
 function goView(k) {
 	// location.href = './view.html?key='+k;
-	viewShow('VIEW');
+	listWrapper.style.display = 'none';
+	viewWrapper.style.display = 'block';
 	db
 	.child(k)
 	.get()
@@ -133,14 +113,11 @@ function sortTr() {
 /************** event callback ************/
 function onGetView(r) {
 	console.log(r.key, r.val());
-	viewWrapper.querySelector('.title-wrap .content').innerHTML = r.val().title;
-	viewWrapper.querySelector('.writer-wrap .content').innerHTML = r.val().writer;
-	viewWrapper.querySelector('.datetime-wrap .content').innerHTML = moment(r.val().createdAt).format('YYYY-MM-DD HH:mm:ss');
-	viewWrapper.querySelector('.readnum-wrap .content').innerHTML = r.val().readcnt || 0;
-	viewWrapper.querySelector('.content-wrap').innerHTML = r.val().content || '';
+	viewWrapper.innerHTML = r.val().title;
 }
 
 function onObserver(el, observer) {
+	console.log('hi');
 	el.forEach(function(v) {
 		if(v.isIntersecting) {
 			tr = tbody.querySelectorAll('tr');
@@ -153,7 +130,9 @@ function onObserver(el, observer) {
 
 function onGetData(r) {
 	r.forEach(function(v, i) {
-		setHTML(v.key, v.val());
+		setTimeout(function() {
+			setHTML(v.key, v.val());
+		}, 5000)
 	});
 }
 
@@ -254,7 +233,6 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	data.writer = writer.value;
 	data.content = content.value;
 	data.createAt = new Date().getTime();
-	data.readcnt = 0;
 	db.limitToLast(1).get().then(getLastIdx).catch(onGetError);
 	function getLastIdx(r) {
 		if(r.numChildren() === 0) {
