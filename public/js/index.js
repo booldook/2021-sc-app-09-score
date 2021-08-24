@@ -351,6 +351,7 @@ function onWrite(e, key) { // 모달창이 오픈되면
 			oldFile.style.display = 'flex';
 			var isImg = r.val().upfile && r.val().upfile.file.type !== allowType[3];
 			deleteFile.dataset['key'] = r.key;
+			oldFile.querySelector('.filename').innerHTML = r.val().upfile.file.name;
 			if(isImg) {
 				thumbFile.src = r.val().upfile.path;
 				thumbFile.classList.remove('video');
