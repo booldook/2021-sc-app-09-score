@@ -4,6 +4,7 @@ body > .gnb {min-height: calc(100vh - 131px);}
 .title-wrap {margin-bottom: .5em; border-left: 3px solid #9be67e; padding-left: .5em;}
 .title-wrap h2.title {font-size: 1.25em;}
 .material-icons {font-size: 1em; line-height: 1; user-select: none;}
+.btn-sm.delete {padding: .125rem .25rem; font-size: .75rem; line-height: 1;border-radius: .2em;}
 
 /******************* header-wrapper *********************/
 .header-wrapper {background-color: #343a40; color: #f8f8f8; font-family: 'Lato', sans-serif; display: flex; align-items: center;}
