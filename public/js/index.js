@@ -1,5 +1,9 @@
 /* 
 $().method().method().mothod()
+"2021082414_76ea3b52-1394-4c04-9b3b-2084d1".substring(시작idx, idx앞에까지)
+"2021082414_76ea3b52-1394-4c04-9b3b-2084d1".substring(7, 10) "414"
+"2021082414_76ea3b52-1394-4c04-9b3b-2084d1".substr(시작idx, 갯수);
+"2021082414_76ea3b52-1394-4c04-9b3b-2084d1".substr(7, 3);     "414"
 
 
 $().next() 			// 바로 다음				nextSibling
@@ -48,6 +52,9 @@ var btReset = document.querySelector('.write-wrapper .bt-reset');			// 글작성
 var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 모달창
 var writeForm = document.writeForm;																		// 글작성 form
 var writeTitle = writeWrapper.querySelector('h2.title');
+var oldFile = writeWrapper.querySelector('.oldfile');
+var thumbFile = writeWrapper.querySelector('.thumb');
+var deleteFile = writeWrapper.querySelector('.file-delete');
 var loading = document.querySelector('.write-wrapper .loading-wrap');	// 파일 업로드 로딩바
 var tbody = document.querySelector('.list-tbl tbody');
 var recent = document.querySelector('.recent-wrapper .list-wp');
@@ -158,6 +165,22 @@ function sortTr() {
 	tbody.querySelectorAll('tr').forEach(function(v, i) {
 		v.querySelector('td').innerHTML = total - i;
 	});
+}
+
+
+function removeFile(fname, key) {
+	storage.child(fname.substr(0, 10)).child(fname)
+	.delete()
+	.then(onRemoveDone)
+	.catch(onRemoveError);
+	function onRemoveDone() {
+		db.child(key).update({ upfile: null });
+		oldFile.style.display = 'none';
+	}
+	function onRemoveError(err) {
+		console.log(err);
+		alert('삭제에 실패하였습니다. 관리자에게 문의하세요.');
+	}
 }
 
 /************** event callback ************/
@@ -309,6 +332,7 @@ function onWrite(e, key) { // 모달창이 오픈되면
 	writeForm.key.value = '';
 	writeTitle.innerHTML = '게시글 작성';
 	btSave.innerHTML = '글쓰기';
+	oldFile.style.display = 'none';
 	writeForm.title.focus();
 	// update처리
 	if(key) db.child(key).once('value', onGetUpdate);
@@ -319,6 +343,29 @@ function onWrite(e, key) { // 모달창이 오픈되면
 		writeForm.content.value = r.val().content;
 		writeTitle.innerHTML = '게시글 수정';
 		btSave.innerHTML = '수정하기';
+		if(r.val().upfile) {
+			oldFile.style.display = 'flex';
+			var isImg = r.val().upfile && r.val().upfile.file.type !== allowType[3];
+			deleteFile.dataset['key'] = r.key;
+			if(isImg) {
+				thumbFile.src = r.val().upfile.path;
+				thumbFile.classList.remove('video');
+			}
+			else {
+				thumbFile.src = '../img/video.png';
+				thumbFile.classList.add('video');
+			}
+		}
+	}
+}
+
+function onDeleteFile(e) {
+	if(confirm('첨부파일을 삭제하시겠습니까?')) {
+		var key = this.dataset['key'];
+		db.child(key).once('value', function(r) {
+			var filename = r.val().upfile.name;
+			removeFile(filename, key);
+		});
 	}
 }
 
@@ -363,10 +410,10 @@ function onWriteSubmit(e) { // btSave클릭시(글 저장시), validation 검증
 	}
 	// firebase save
 	var data = {};
-	data.user = user.uid;
 	data.title = title.value;
 	data.writer = writer.value;
 	data.content = content.value;
+	data.user = user.uid;
 	data.createAt = new Date().getTime();
 	data.readcnt = 0;
 	db.limitToLast(1).get().then(getLastIdx).catch(onGetError);
@@ -485,6 +532,7 @@ btUpdate.addEventListener('click', onUpdate);
 btDelete.addEventListener('click', onDelete);
 btClose.addEventListener('click', onClose);
 btReset.addEventListener('click', onWriteReset);
+deleteFile.addEventListener('click', onDeleteFile);
 writeForm.addEventListener('submit', onWriteSubmit);
 writeForm.title.addEventListener('blur', onRequiredValid);
 writeForm.title.addEventListener('keyup', onRequiredValid);
