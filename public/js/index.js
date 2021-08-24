@@ -41,6 +41,8 @@ var btLogin = document.querySelector('.header-wrapper .bt-login');		// 로긴 �
 var btLogout = document.querySelector('.header-wrapper .bt-logout');	// 로그아웃 버튼
 var btWrite = document.querySelector('.list-wrapper .bt-write');			// 글작성 모달창 오픈버튼
 var btWrite2 = document.querySelector('.view-wrapper .bt-write');			// 글작성 모달창 오픈버튼
+var btUpdate = document.querySelector('.view-wrapper .bt-update');		// 글수정
+var btDelete = document.querySelector('.view-wrapper .bt-delete');		// 글삭제
 var btClose = document.querySelector('.write-wrapper .bt-close');			// 글작성 모달창 클로즈버튼
 var btReset = document.querySelector('.write-wrapper .bt-reset');			// 글작성 모달창 리셋버튼
 var writeWrapper = document.querySelector('.write-wrapper');					// 글작성 모달창
@@ -55,14 +57,27 @@ var tr;
 
 var observer; 		// IntersectionObserver의 Instance
 var listCnt = 5; 	// 데이터를 한번에 불러올 갯수
+var globalKey = null;
 
 /************** user function *************/
+function viewButton(chk) {
+	if(chk && user && globalKey === user.uid) {
+		btUpdate.style.display = 'block';
+		btDelete.style.display = 'block';
+	}
+	else {
+		btUpdate.style.display = 'none';
+		btDelete.style.display = 'none';
+	}
+}
+
 function viewShow(el) {
 	switch(el) {
 		case 'LIST':
 			listWrapper.style.display = 'block';
 			viewWrapper.style.display = 'none';
 			updateWrapper.style.display = 'none';
+			globalKey = null;
 			break;
 		case 'VIEW':
 			listWrapper.style.display = 'none';
@@ -149,13 +164,39 @@ function sortTr() {
 }
 
 /************** event callback ************/
+function onUpdate(e) {
+
+}
+
+function onDelete(e) {
+	if(confirm('정말로 삭제하시겠습니까?')) {
+		db.child(this.dataset['key']).once('value', function(v) {
+			if(user && v.val().user === user.uid) {
+				db.child(e.target.dataset['key']).remove();
+				viewShow('LIST');
+				listInit();
+				recent.innerHTML = '';
+				recentInit(ref);
+			}
+			else {
+				alert('권한이 없습니다.');
+				viewShow('LIST');
+			}
+		});
+	}
+}
+
 function onGetView(r) {
+	globalKey = r.val().user;
 	console.log('my', r.key);
 	viewWrapper.querySelector('.title-wrap .content').innerHTML = r.val().title;
 	viewWrapper.querySelector('.writer-wrap .content').innerHTML = r.val().writer;
 	viewWrapper.querySelector('.datetime-wrap .content').innerHTML = moment(r.val().createdAt).format('YYYY-MM-DD HH:mm:ss');
 	viewWrapper.querySelector('.readnum-wrap .content').innerHTML = r.val().readcnt || 0;
 	viewWrapper.querySelector('.content-wrap').innerHTML = r.val().content || '';
+	btUpdate.dataset['key'] = r.key;
+	btDelete.dataset['key'] = r.key;
+	viewButton(true);
 	if(r.val().upfile) {
 		var html = '';
 		if(allowType.indexOf(r.val().upfile.file.type) === 3) {
@@ -236,12 +277,14 @@ function onAuthChanged(r) { // login, logout 상태가 변하면...
 		btLogout.style.display = 'block';
 		btWrite.style.display = 'inline-block';
 		btWrite2.style.display = 'inline-block';
+		viewButton(true);
 	}
 	else {	// 로그아웃 되면 UI가 할일
 		btLogin.style.display = 'block';
 		btLogout.style.display = 'none';
 		btWrite.style.display = 'none';
 		btWrite2.style.display = 'none';
+		viewButton(false);
 	}
 }
 
@@ -421,6 +464,8 @@ btLogin.addEventListener('click', onLogin);
 btLogout.addEventListener('click', onLogout);
 btWrite.addEventListener('click', onWrite);
 btWrite2.addEventListener('click', onWrite);
+btUpdate.addEventListener('click', onUpdate);
+btDelete.addEventListener('click', onDelete);
 btClose.addEventListener('click', onClose);
 btReset.addEventListener('click', onWriteReset);
 writeForm.addEventListener('submit', onWriteSubmit);
